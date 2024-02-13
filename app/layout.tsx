@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Providers } from "@/lib/providers";
+import Navbar from "@/components/Navbar/Navbar";
+import Pagination from "@/components/Pagination/Pagination";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +19,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <Providers>
+        <body className={inter.className}>
+          <Navbar/>
+          <section className="px-[10vw] py-[2rem] bg-[#f3f6f6]">
+            {children}
+            <Pagination/>
+          </section>
+        </body>
+      </Providers>
     </html>
   );
 }
