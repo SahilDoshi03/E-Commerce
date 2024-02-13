@@ -5,6 +5,7 @@ import { Fragment, useState } from 'react'
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
+import Pagination from "@/components/Pagination/Pagination";
 
 const sortOptions = [
   { name: 'Most Popular', href: '#', current: true },
@@ -61,7 +62,7 @@ export default function Home() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
   return (
-    <main>
+    <main className="px-[10vw] py-[2rem]">
           <div className="bg-white rounded-t-lg">
       <div>
         {/* Mobile filter dialog */}
@@ -280,6 +281,7 @@ export default function Home() {
         </main>
       </div>
     </div>
+    <Pagination/>
     </main>
   );
 }

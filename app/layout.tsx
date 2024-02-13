@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/lib/providers";
 import Navbar from "@/components/Navbar/Navbar";
-import Pagination from "@/components/Pagination/Pagination";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,14 +14,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full bg-[#f3f6f6]">
       <Providers>
-        <body className={inter.className}>
+        <body className="h-full bg-[#f3f6f6]">
           <Navbar/>
-          <section className="px-[10vw] py-[2rem] bg-[#f3f6f6]">
-            {children}
-            <Pagination/>
-          </section>
+          {children}
         </body>
       </Providers>
     </html>
