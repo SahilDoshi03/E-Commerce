@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "@/lib/providers";
 import Navbar from "@/components/Navbar/Navbar";
+import React from "react";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,10 +17,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full bg-[#f3f6f6]">
       <Providers>
-        <body className="h-full bg-[#f3f6f6]">
-          <Navbar/>
-          {children}
-        </body>
+        <React.StrictMode>
+          <body className="h-full bg-[#f3f6f6]">
+            <Navbar />
+            {children}
+          </body>
+        </React.StrictMode>
       </Providers>
     </html>
   );
