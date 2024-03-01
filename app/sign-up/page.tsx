@@ -1,23 +1,38 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useDispatch, registerUser } from "@/lib/redux";
 
 type RegisterFormInputValues = {
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
 };
 
 export default function SignUp() {
+  const router = useRouter();
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterFormInputValues>();
 
-  const onSubmit: SubmitHandler<RegisterFormInputValues> = (data) =>
-    console.log(data);
+  const onSubmit: SubmitHandler<RegisterFormInputValues> = async (
+    data: RegisterFormInputValues
+  ) => {
+    const { confirmPassword, ...formData } = data;
+    try {
+      await dispatch(registerUser(formData));
+      router.push("/");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -90,9 +105,13 @@ export default function SignUp() {
                   id="password"
                   {...register("password", {
                     required: "Password is required",
+                    minLength: {
+                      value: 8,
+                      message: "Password must be at least 8 characters",
+                    },
                     maxLength: {
                       value: 15,
-                      message: "Length must not exceed 15 characters",
+                      message: "Password must not exceed 15 characters",
                     },
                     pattern: {
                       value:

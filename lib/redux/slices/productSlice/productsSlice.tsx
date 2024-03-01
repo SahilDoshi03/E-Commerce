@@ -1,14 +1,19 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { getProducts, getBrands, getCategories, getProductById } from "./thunks";
-import type { Product, Brand, Category} from "@/types/Product"
+import {
+  getProducts,
+  getBrands,
+  getCategories,
+  getProductById,
+} from "./thunks";
+import type { Product, Brand, Category } from "@/types/Product";
 
 type initialStateT = {
-  totalCount: number
-  products: Product[]
-  brands: Brand[]
-  categories: Category[]
-  status: "idle" | "loading" | "error"
-}
+  totalCount: number;
+  products: Product[];
+  brands: Brand[];
+  categories: Category[];
+  status: "idle" | "loading" | "error";
+};
 
 const initialState: initialStateT = {
   totalCount: 0,
@@ -52,6 +57,6 @@ export const productSlice = createSlice({
       .addCase(getCategories.fulfilled, (state, action) => {
         state.status = "idle";
         state.categories = action.payload.categories;
-      })
+      });
   },
 });

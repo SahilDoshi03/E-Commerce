@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { Filter } from "@/types/Product";
 
-export const fetchProductById = async (productId: string) => {
+export const fetchProductByIdCall = async (productId: string) => {
   try{
     const res = await axios.get(`http://localhost:3000/api/v1/products/${productId}`)
     const data = res.data
@@ -11,7 +11,7 @@ export const fetchProductById = async (productId: string) => {
   }
 }
 
-export const fetchProducts = async (filter: Filter) => {
+export const fetchProductsCall = async (filter: Filter) => {
   const objectToQueryString = (obj: Filter) => {
     const keyValuePairs = [];
 
@@ -53,7 +53,7 @@ export const fetchProducts = async (filter: Filter) => {
   }
 };
 
-export const fetchBrands = async () => {
+export const fetchBrandsCall = async () => {
   try{
     const res = await axios.get(`http://localhost:3000/api/v1/brands`)
     const data = res.data
@@ -63,7 +63,7 @@ export const fetchBrands = async () => {
   }
 }
 
-export const fetchCategories = async () => {
+export const fetchCategoriesCall = async () => {
   try{
     const res = await axios.get(`http://localhost:3000/api/v1/categories`)
     const data = res.data

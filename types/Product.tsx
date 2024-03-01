@@ -1,4 +1,4 @@
-export type Product = {
+type Product = {
   _id: string;
   thumbnail: string;
   title: string;
@@ -12,34 +12,36 @@ export type Product = {
   discountPercentage: number;
 };
 
-export type Filters = Section[];
+type Filters = Section[];
 
-export type Filter = {
+type Filter = {
   brand: string[];
   category: string[];
   sort?: string;
 };
 
-export type Section = {
+type Section = {
   id: "brand" | "category";
   name: string;
   options: Brand[] | Category[];
 };
 
-export type sortOption = {
+type sortOption = {
   name: string;
   sort: string;
   current: boolean;
 };
 
-export type Brand = {
+type Brand = {
   _id: string;
   label: string;
   value: string;
-}
+};
 
-export type Category = {
+type Category = {
   _id: string;
   label: string;
   value: string;
-}
+};
+
+export type { Product, Filters, Filter, Section, sortOption, Brand, Category };

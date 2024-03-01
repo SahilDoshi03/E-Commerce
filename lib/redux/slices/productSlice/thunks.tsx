@@ -1,11 +1,16 @@
 import { createAppAsyncThunk } from "@/lib/redux/createAppAsyncThunk";
-import { fetchProducts, fetchBrands, fetchCategories, fetchProductById } from "./fetchProducts";
+import {
+  fetchProductsCall,
+  fetchBrandsCall,
+  fetchCategoriesCall,
+  fetchProductByIdCall,
+} from "./productAPICalls";
 import type { Filter } from "@/types/Product";
 
 export const getProductById = createAppAsyncThunk(
   "product/fetchProductById",
   async (productId: string) => {
-    const res = await fetchProductById(productId);
+    const res = await fetchProductByIdCall(productId);
     return res;
   }
 );
@@ -13,7 +18,7 @@ export const getProductById = createAppAsyncThunk(
 export const getProducts = createAppAsyncThunk(
   "product/fetchProducts",
   async (filter: Filter) => {
-    const res = await fetchProducts(filter);
+    const res = await fetchProductsCall(filter);
     return res;
   }
 );
@@ -21,7 +26,7 @@ export const getProducts = createAppAsyncThunk(
 export const getBrands = createAppAsyncThunk(
   "product/fetchBrands",
   async () => {
-    const res = await fetchBrands();
+    const res = await fetchBrandsCall();
     return res;
   }
 );
@@ -29,7 +34,7 @@ export const getBrands = createAppAsyncThunk(
 export const getCategories = createAppAsyncThunk(
   "product/fetchCategories",
   async () => {
-    const res = await fetchCategories();
+    const res = await fetchCategoriesCall();
     return res;
   }
 );

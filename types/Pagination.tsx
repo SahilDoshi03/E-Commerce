@@ -1,4 +1,4 @@
-export type HandlePaginationT = (
+type HandlePaginationT = (
   e: React.MouseEvent<
     HTMLButtonElement | HTMLParagraphElement | SVGSVGElement,
     MouseEvent
@@ -6,7 +6,9 @@ export type HandlePaginationT = (
   page: number
 ) => void;
 
-export type PaginationPropsT = {
+type PaginationPropsT = {
   handlePagination: HandlePaginationT;
   page: number;
 };
+
+export type { HandlePaginationT, PaginationPropsT}

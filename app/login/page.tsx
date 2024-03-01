@@ -1,7 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useDispatch, loginUser } from "@/lib/redux";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useSelector, selectUserToken } from "@/lib/redux";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 type LoginFormInputValues = {
   email: string;
@@ -9,13 +13,27 @@ type LoginFormInputValues = {
 };
 
 export default function Login() {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const token = useSelector(selectUserToken);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormInputValues>();
 
-  const onSubmit: SubmitHandler<LoginFormInputValues> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<LoginFormInputValues> = async (data) => {
+    await dispatch(loginUser(data));
+    router.push("/");
+  };
+
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem("token", token);
+      router.push("/"); // Redirect to dashboard if user is logged in
+    }
+  }, [token]);
 
   return (
     <>
@@ -89,9 +107,13 @@ export default function Login() {
                   id="password"
                   {...register("password", {
                     required: "Password is required",
+                    minLength: {
+                      value: 8,
+                      message: "Password must be at least 8 characters",
+                    },
                     maxLength: {
                       value: 15,
-                      message: "Length must not exceed 15 characters",
+                      message: "Password must not exceed 15 characters",
                     },
                     pattern: {
                       value:

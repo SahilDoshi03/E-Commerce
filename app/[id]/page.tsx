@@ -1,15 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import {
   useSelector,
   getProductById,
   selectProducts,
+  selectCart,
   useDispatch,
   statusProducts,
+  addToCart,
 } from "@/lib/redux";
-import type { Product } from "@/types/Product";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -17,8 +18,22 @@ function classNames(...classes: string[]) {
 
 export default function ProductDetail({ params }: { params: { id: string } }) {
   const dispatch = useDispatch();
+  const cart = useSelector(selectCart);
   const product = useSelector(selectProducts);
   const status = useSelector(statusProducts);
+
+  const handleAddToCart = async (productId: string) => {
+    try {
+      if (cart.findIndex((item) => item.product._id === productId) < 0) {
+        await dispatch(addToCart(productId));
+        alert("Item added to cart successfully!");
+      } else {
+        alert("Item already added");
+      }
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+    }
+  };
 
   useEffect(() => {
     dispatch(getProductById(params.id));
@@ -31,6 +46,10 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
   if (status === "error") {
     return <h1>Error...</h1>;
   }
+
+  // We are using product[0] because we are receiving array from backend to be consistent with type of data being fetched
+  // We were getting a type error or if we solve type error we were getting error with product.length because it can't be called on non-array data structures
+  // Also empty array is treated as true so we had to use product.length to check instead of just product.
 
   return (
     <div className="bg-white">
@@ -116,14 +135,12 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
                 </div>
               </div>
 
-              <form className="mt-10">
-                <button
-                  type="submit"
-                  className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                  Add to Cart
-                </button>
-              </form>
+              <button
+                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                onClick={() => handleAddToCart(product[0]._id)}
+              >
+                Add to Cart
+              </button>
             </div>
 
             <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">

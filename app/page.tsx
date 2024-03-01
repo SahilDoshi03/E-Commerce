@@ -20,7 +20,7 @@ import {
   useSelector,
   selectBrands,
   selectCategories,
-  totalCount,
+  totalCount
 } from "@/lib/redux";
 import type {
   Filter,
